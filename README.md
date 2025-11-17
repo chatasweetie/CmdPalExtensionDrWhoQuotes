@@ -2,7 +2,7 @@
 
 A delightful Command Palette extension that brings the wisdom, wit, and wonder of Doctor Who to your fingertips. Get inspired with random quotes from all incarnations of the Doctor, from the First Doctor through the War Doctor, Ninth, and Tenth Doctors.
 
-![Doctor Who Quotes Extension](Assets/StoreLogo.png)
+![Doctor Who Quotes Extension](CmdPalExtensionDrWhoQuotes/Assets/StoreLogo.png)
 
 ## 🎯 Features
 
@@ -26,14 +26,14 @@ A delightful Command Palette extension that brings the wisdom, wit, and wonder o
 
 ```
 CmdPalExtensionDrWhoQuotes/
-├── Assets/                     # Extension icons and images
-├── Data/                       # Quote data storage
+├── Assets/          # Extension icons and images
+├── Data/          # Quote data storage
 │   └── QuotesRepository.cs     # All Doctor Who quotes
-├── Models/                     # Data models
-│   └── DrWhoQuote.cs           # Quote model
-├── Pages/                      # UI pages
+├── Models/         # Data models
+│   └── DrWhoQuote.cs    # Quote model
+├── Pages/          # UI pages
 │   └── CmdPalExtensionDrWhoQuotesPage.cs
-├── Publication/                # Publishing scripts and tools
+├── Publication/      # Publishing scripts and tools
 └── CmdPalExtensionDrWhoQuotesCommandsProvider.cs
 ```
 
@@ -45,8 +45,8 @@ Want to contribute more Doctor Who quotes? Here's how:
 2. Add new quotes to the array in `GetAllQuotes()`:
    ```csharp
    new DrWhoQuote { 
-       Quote = "Your quote here", 
-     Doctor = "The Eleventh Doctor" 
+    Quote = "Your quote here", 
+   Doctor = "The Eleventh Doctor" 
    }
    ```
 3. For long quotes, use verbatim strings with natural line breaks:
@@ -102,11 +102,6 @@ If you enjoy this extension, please:
 
 Made with ❤️ by Whovians, for Whovians
 
-
-## License
-
-This project is licensed under the MIT License. See individual extension directories for specific license information.
-
 ## Author
 
-[Jessica Dene Earley-Cha](htthttps://www.jessicadeneearley-cha.com/)  |  [https://github.com/chatasweetie](https://github.com/chatasweetie)
+[Jessica Dene Earley-Cha](https://www.jessicadeneearley-cha.com/)  |  [https://github.com/chatasweetie](https://github.com/chatasweetie)
