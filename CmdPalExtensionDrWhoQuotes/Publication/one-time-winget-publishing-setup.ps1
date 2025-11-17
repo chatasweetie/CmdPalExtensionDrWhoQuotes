@@ -352,8 +352,8 @@ try {
     $setupTemplateContent = $setupTemplateContent -replace 'Filename: "\{app\}\\EXTENSION_NAME\.exe"', "Filename: `"{app}\$projectName.exe`""
     
     # Update Registry CLSID entries
-    $setupTemplateContent = $setupTemplateContent -replace 'CLSID\\CLSID-HERE', "CLSID\{$extensionGuid}"
-    $setupTemplateContent = $setupTemplateContent -replace '\{\{CLSID-HERE\}\}', "{$extensionGuid}"
+    $setupTemplateContent = $setupTemplateContent -replace 'CLSID\\CLSID-HERE', "CLSID\{{$extensionGuid}}"
+    $setupTemplateContent = $setupTemplateContent -replace '\{\{CLSID-HERE\}\}', "{{$extensionGuid}}"
     
     # Update Registry ValueData (EXTENSION_NAME)
     $setupTemplateContent = $setupTemplateContent -replace 'ValueData: "EXTENSION_NAME"', "ValueData: `"$projectName`""
@@ -439,60 +439,28 @@ Write-Host "================================================================" -F
 Write-Host "  Moving Files to Correct Locations" -ForegroundColor Cyan
 Write-Host "================================================================" -ForegroundColor Cyan
 Write-Host ""
-Write-Host "The following files will be moved:" -ForegroundColor Yellow
-Write-Host "  - build-exe.ps1 → project root (1 level up)" -ForegroundColor Gray
-Write-Host "  - setup-template.iss → project root (1 level up)" -ForegroundColor Gray
+Write-Host "The following file will be moved:" -ForegroundColor Yellow
 Write-Host "  - release-extension.yml → .github/workflows/ (2 levels up)" -ForegroundColor Gray
+Write-Host ""
+Write-Host "The following files will remain in winget-resources:" -ForegroundColor Yellow
+Write-Host "  - build-exe.ps1" -ForegroundColor Gray
+Write-Host "  - setup-template.iss" -ForegroundColor Gray
 Write-Host ""
 
 # Calculate destination paths
-# From: CmdPalExtensionDrWhoQuotes/Publication/winget-resources/
-# build-exe.ps1 and setup-template.iss → CmdPalExtensionDrWhoQuotes/ (1 level up from Publication = $projectRoot)
-# release-extension.yml → CmdPalExtensionDrWhoQuotes/.github/workflows/ (2 levels up from Publication)
-
-$buildExeDestination = Join-Path $projectRoot "build-exe.ps1"
-$setupTemplateDestination = Join-Path $projectRoot "setup-template.iss"
+# From: TemplateCmdPalExtension/Publication/winget-resources/
+# release-extension.yml → TemplateCmdPalExtension/.github/workflows/ (2 levels up from Publication)
 
 # GitHub workflows directory (2 levels up from Publication)
 $solutionRoot = Split-Path -Parent $projectRoot
 $githubWorkflowsDir = Join-Path $solutionRoot ".github\workflows"
 $releaseYmlDestination = Join-Path $githubWorkflowsDir "release-extension.yml"
 
-Write-Host "Destinations:" -ForegroundColor Yellow
-Write-Host "  build-exe.ps1 → $buildExeDestination" -ForegroundColor Gray
-Write-Host "  setup-template.iss → $setupTemplateDestination" -ForegroundColor Gray
+Write-Host "Destination:" -ForegroundColor Yellow
 Write-Host "  release-extension.yml → $releaseYmlDestination" -ForegroundColor Gray
 Write-Host ""
 
-# Move build-exe.ps1
-Write-Host "Moving build-exe.ps1..." -ForegroundColor Cyan
-try {
-    if (Test-Path $buildExeDestination) {
-        Write-Host "  [WARNING] Destination file exists, overwriting..." -ForegroundColor Yellow
-    }
-    Copy-Item $buildExePath -Destination $buildExeDestination -Force -ErrorAction Stop
-    Write-Host "  [SUCCESS] Moved to: $buildExeDestination" -ForegroundColor Green
-}
-catch {
-    Write-Host "  [ERROR] Could not move build-exe.ps1: $($_.Exception.Message)" -ForegroundColor Red
-}
-Write-Host ""
-
-# Move setup-template.iss
-Write-Host "Moving setup-template.iss..." -ForegroundColor Cyan
-try {
-    if (Test-Path $setupTemplateDestination) {
-        Write-Host "  [WARNING] Destination file exists, overwriting..." -ForegroundColor Yellow
-    }
-    Copy-Item $setupTemplatePath -Destination $setupTemplateDestination -Force -ErrorAction Stop
-    Write-Host "  [SUCCESS] Moved to: $setupTemplateDestination" -ForegroundColor Green
-}
-catch {
-    Write-Host "  [ERROR] Could not move setup-template.iss: $($_.Exception.Message)" -ForegroundColor Red
-}
-Write-Host ""
-
-# Create .github/workflows directory if it doesn't exist
+# Move release-extension.yml
 Write-Host "Moving release-extension.yml..." -ForegroundColor Cyan
 try {
     if (-not (Test-Path $githubWorkflowsDir)) {
@@ -503,7 +471,7 @@ try {
     if (Test-Path $releaseYmlDestination) {
         Write-Host "  [WARNING] Destination file exists, overwriting..." -ForegroundColor Yellow
     }
-    Copy-Item $releaseYmlPath -Destination $releaseYmlDestination -Force -ErrorAction Stop
+    Move-Item $releaseYmlPath -Destination $releaseYmlDestination -Force -ErrorAction Stop
     Write-Host "  [SUCCESS] Moved to: $releaseYmlDestination" -ForegroundColor Green
 }
 catch {
@@ -511,40 +479,14 @@ catch {
 }
 Write-Host ""
 
-# Verify files were copied
-Write-Host "Verifying files..." -ForegroundColor Cyan
-$allFilesOk = $true
-
-if (Test-Path $buildExeDestination) {
-    Write-Host "  [OK] build-exe.ps1 exists at destination" -ForegroundColor Green
-}
-else {
-    Write-Host "  [ERROR] build-exe.ps1 NOT found at destination" -ForegroundColor Red
-    $allFilesOk = $false
-}
-
-if (Test-Path $setupTemplateDestination) {
-    Write-Host "  [OK] setup-template.iss exists at destination" -ForegroundColor Green
-}
-else {
-    Write-Host "  [ERROR] setup-template.iss NOT found at destination" -ForegroundColor Red
-    $allFilesOk = $false
-}
+# Verify file was moved
+Write-Host "Verifying file..." -ForegroundColor Cyan
 
 if (Test-Path $releaseYmlDestination) {
     Write-Host "  [OK] release-extension.yml exists at destination" -ForegroundColor Green
 }
 else {
     Write-Host "  [ERROR] release-extension.yml NOT found at destination" -ForegroundColor Red
-    $allFilesOk = $false
-}
-Write-Host ""
-
-if ($allFilesOk) {
-    Write-Host "  [SUCCESS] All files moved successfully!" -ForegroundColor Green
-}
-else {
-    Write-Host "  [WARNING] Some files failed to move. Check errors above." -ForegroundColor Yellow
 }
 Write-Host ""
 
@@ -553,13 +495,16 @@ Write-Host "================================================================" -F
 Write-Host "  Setup Completed Successfully!" -ForegroundColor Green
 Write-Host "================================================================" -ForegroundColor Green
 Write-Host ""
-Write-Host "Files have been configured and moved to:" -ForegroundColor Yellow
-Write-Host "  $buildExeDestination" -ForegroundColor White
-Write-Host "  $setupTemplateDestination" -ForegroundColor White
-Write-Host "  $releaseYmlDestination" -ForegroundColor White
+Write-Host "Files have been configured:" -ForegroundColor Yellow
+Write-Host "  Updated (in winget-resources):" -ForegroundColor Cyan
+Write-Host "    $buildExePath" -ForegroundColor White
+Write-Host "    $setupTemplatePath" -ForegroundColor White
+Write-Host ""
+Write-Host "  Moved to GitHub workflows:" -ForegroundColor Cyan
+Write-Host "    $releaseYmlDestination" -ForegroundColor White
 Write-Host ""
 Write-Host "Next Steps:" -ForegroundColor Cyan
-Write-Host "  1. Review the moved files to ensure correctness" -ForegroundColor Gray
+Write-Host "  1. Review the configured files to ensure correctness" -ForegroundColor Gray
 Write-Host "  2. Add and commit files and push to Github" -ForegroundColor Gray
 Write-Host "  3. Follow instructions at https://learn.microsoft.com//windows/powertoys/command-palette/publish-extension" -ForegroundColor Gray
 Write-Host ""

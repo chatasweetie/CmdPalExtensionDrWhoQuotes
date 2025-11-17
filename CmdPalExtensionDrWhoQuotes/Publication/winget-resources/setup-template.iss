@@ -32,5 +32,5 @@ Source: "bin\Release\win-x64\publish\*"; DestDir: "{app}"; Flags: ignoreversion 
 Name: "{group}\DrWhoQuotesCmdPalExtension"; Filename: "{app}\CmdPalExtensionDrWhoQuotes.exe"
 
 [Registry]
-Root: HKCU; Subkey: "SOFTWARE\Classes\CLSID\{14ece62f-3bcb-4e12-ac7c-f17c1cf19b7e}"; ValueData: "CmdPalExtensionDrWhoQuotes"
-Root: HKCU; Subkey: "SOFTWARE\Classes\CLSID\{14ece62f-3bcb-4e12-ac7c-f17c1cf19b7e}\LocalServer32"; ValueData: "{app}\CmdPalExtensionDrWhoQuotes.exe -RegisterProcessAsComServer"
+Root: HKCU; Subkey: "SOFTWARE\Classes\CLSID\{{14ece62f-3bcb-4e12-ac7c-f17c1cf19b7e}}"; ValueData: "CmdPalExtensionDrWhoQuotes"
+Root: HKCU; Subkey: "SOFTWARE\Classes\CLSID\{{14ece62f-3bcb-4e12-ac7c-f17c1cf19b7e}}\LocalServer32"; ValueData: "{app}\CmdPalExtensionDrWhoQuotes.exe -RegisterProcessAsComServer"
