@@ -1,0 +1,3 @@
+[Files]
+    "AppPackages\x64\CmdPalExtensionDrWhoQuotes_0.0.1.0_x64_Test\CmdPalExtensionDrWhoQuotes_0.0.1.0_x64.msix" "CmdPalExtensionDrWhoQuotes_0.0.1.0_x64.msix"
+    "AppPackages\ARM64\CmdPalExtensionDrWhoQuotes_0.0.1.0_arm64_Test\CmdPalExtensionDrWhoQuotes_0.0.1.0_arm64.msix" "CmdPalExtensionDrWhoQuotes_0.0.1.0_arm64.msix"

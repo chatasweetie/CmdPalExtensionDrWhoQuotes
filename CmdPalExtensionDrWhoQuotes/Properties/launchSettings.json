@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "CmdPalExtensionDrWhoQuotes (Package)": {
+      "commandName": "MsixPackage",
+      "doNotLaunchApp": true
+    },
+    "CmdPalExtensionDrWhoQuotes (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
