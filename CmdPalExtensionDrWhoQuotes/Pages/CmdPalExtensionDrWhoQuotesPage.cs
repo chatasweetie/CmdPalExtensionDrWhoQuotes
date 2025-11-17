@@ -16,7 +16,11 @@ internal sealed partial class CmdPalExtensionDrWhoQuotesPage : ContentPage
     {
         Icon = new("\uE8F2"); // Message
         Title = "Doctor Who Quotes";
-        Name = "Preview file";
+        Name = "Press Enter for Quotes";
+
+         Commands = [
+             new CommandContextItem(new AnonymousCommand(() => { }) { Result = CommandResult.GoBack() }) { Title = "Back" },
+         ];
     }
 
     public override IContent[] GetContent()
