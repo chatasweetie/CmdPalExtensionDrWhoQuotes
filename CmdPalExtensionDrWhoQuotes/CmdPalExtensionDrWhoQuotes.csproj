@@ -32,9 +32,9 @@
       AppxPackageIdentityName = replace with Microsoft Store's Package/Identity/Name 
       AppxPackagePublisher = replace with Microsoft Store's Package/Identity/Publisher
     -->
-    <!-- <AppxPackageIdentityName>YOUR_PACKAGE_IDENTITY_NAME_HERE</AppxPackageIdentityName>
-    <AppxPackagePublisher>YOUR_PACKAGE_IDENTITY_PUBLISHER_HERE</AppxPackagePublisher>
-    <AppxPackageVersion>0.0.1.0</AppxPackageVersion> -->
+    <AppxPackageIdentityName>JessicaDeneEarley-Cha.DrWhoQuotesCmdPalExtension</AppxPackageIdentityName>
+    <AppxPackagePublisher>CN=16D1F4AB-86B4-4DA3-A0CA-3FD2DBB38A19</AppxPackagePublisher>
+    <AppxPackageVersion>0.0.1.0</AppxPackageVersion>
 
     
   </PropertyGroup>
@@ -42,7 +42,7 @@
   <!-- FOR PUBLISHING TO MICROSOFT STORE 2 of 2-->
   <!-- When you're ready to publish your extension to Microsoft Store, uncomment the 
       Target tag and confirm the images exist -->
-  <!-- <Target Name="PrepareAssets" BeforeTargets="BeforeBuild">
+  <Target Name="PrepareAssets" BeforeTargets="BeforeBuild">
     <Copy SourceFiles="$(MSBuildProjectDirectory)\Assets\Square150x150Logo.scale-200.png"
           DestinationFiles="$(MSBuildProjectDirectory)\Assets\Square150x150Logo.png"
           SkipUnchangedFiles="true" />
@@ -61,7 +61,7 @@
     <Copy SourceFiles="$(MSBuildProjectDirectory)\Assets\StoreLogo.scale-100.png"
           DestinationFiles="$(MSBuildProjectDirectory)\Assets\StoreLogo.png"
           SkipUnchangedFiles="true" />
-  </Target> -->
+  </Target>
 
   <ItemGroup>
     <Manifest Include="$(ApplicationManifest)" />

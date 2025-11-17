@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 
 <Package
   xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
@@ -18,12 +18,12 @@
       Logo = Confirm that this image exist at the path
        -->
   <Identity
-    Name="CmdPalExtensionDrWhoQuotes"
-    Publisher="CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US"
+    Name="JessicaDeneEarley-Cha.DrWhoQuotesCmdPalExtension"
+    Publisher="CN=16D1F4AB-86B4-4DA3-A0CA-3FD2DBB38A19"
     Version="0.0.1.0" />
   <Properties>
-    <DisplayName>Dr Who Quotes</DisplayName>
-    <PublisherDisplayName>A Lone Developer</PublisherDisplayName>
+    <DisplayName>DrWhoQuotesCmdPalExtension</DisplayName>
+    <PublisherDisplayName>Jessica Dene Earley-Cha</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
@@ -41,7 +41,7 @@
       Executable="$targetnametoken$.exe"
       EntryPoint="$targetentrypoint$">
       <uap:VisualElements
-        DisplayName="Dr Who Quotes"
+        DisplayName="DrWhoQuotesCmdPalExtension"
         Description="Dr Who Quotes"
         BackgroundColor="transparent"
         Square150x150Logo="Assets\Square150x150Logo.png"

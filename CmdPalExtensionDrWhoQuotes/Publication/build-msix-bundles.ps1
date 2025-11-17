@@ -429,40 +429,50 @@ if ($createBundle) {
 
     Push-Location $projectRoot
     try {
-        # Use the bundle_mapping.txt file in microsoft-store-resources
-        $bundleMappingRelative = Join-Path "Publication" "microsoft-store-resources" "bundle_mapping.txt"
-        
-        $makeappxArgs = @(
-            "bundle",
-            "/v",
-            "/f", $bundleMappingRelative,
-            "/p", $bundleOutputPath
-        )
-        
-        Write-Host "  Running: makeappx $($makeappxArgs -join ' ')" -ForegroundColor Gray
-        Write-Host ""
-        
-        $bundleOutput = & $makeappxPath.FullName $makeappxArgs 2>&1
-        
-        if ($LASTEXITCODE -ne 0) {
-            Write-Host ""
-            Write-Host "ERROR: Bundle creation failed with exit code $LASTEXITCODE" -ForegroundColor Red
-            Write-Host ""
-            Write-Host "Output:" -ForegroundColor Gray
-            $bundleOutput | ForEach-Object { Write-Host "  $_" -ForegroundColor Gray }
-            Write-Host ""
+        # Use absolute path to bundle_mapping.txt
+        $bundleMappingAbsolute = Join-Path $microsoftStoreResourcesPath "bundle_mapping.txt"
+      
+ # Verify the mapping file exists
+        if (-not (Test-Path $bundleMappingAbsolute)) {
+     Write-Host "ERROR: bundle_mapping.txt not found at: $bundleMappingAbsolute" -ForegroundColor Red
             Pop-Location
             Write-Host "Press any key to exit..." -ForegroundColor Gray
             $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+    exit 1
+        }
+        
+      $makeappxArgs = @(
+    "bundle",
+            "/v",
+         "/f", "`"$bundleMappingAbsolute`"",
+   "/p", "`"$bundleOutputPath`""
+    )
+        
+        Write-Host "  Running: makeappx bundle /v /f `"$bundleMappingAbsolute`" /p `"$bundleOutputPath`"" -ForegroundColor Gray
+        Write-Host ""
+        
+        # Run makeappx with proper quoting
+     $bundleOutput = & $makeappxPath.FullName bundle /v /f $bundleMappingAbsolute /p $bundleOutputPath 2>&1
+        
+        if ($LASTEXITCODE -ne 0) {
+            Write-Host ""
+ Write-Host "ERROR: Bundle creation failed with exit code $LASTEXITCODE" -ForegroundColor Red
+      Write-Host ""
+            Write-Host "Output:" -ForegroundColor Gray
+    $bundleOutput | ForEach-Object { Write-Host "  $_" -ForegroundColor Gray }
+     Write-Host ""
+         Pop-Location
+   Write-Host "Press any key to exit..." -ForegroundColor Gray
+  $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
             exit 1
         }
         
-        Write-Host "  [SUCCESS] Bundle created" -ForegroundColor Green
+     Write-Host "  [SUCCESS] Bundle created" -ForegroundColor Green
         Write-Host ""
     }
     catch {
-        Write-Host ""
-        Write-Host "ERROR: Bundle creation failed: $($_.Exception.Message)" -ForegroundColor Red
+   Write-Host ""
+   Write-Host "ERROR: Bundle creation failed: $($_.Exception.Message)" -ForegroundColor Red
         Pop-Location
         Write-Host "Press any key to exit..." -ForegroundColor Gray
         $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
