@@ -11,13 +11,13 @@
 #define AppVersion "0.0.1.0"
 
 [Setup]
-AppId={{GUID-HERE}}
-AppName=DISPLAY_NAME
+AppId={{14ece62f-3bcb-4e12-ac7c-f17c1cf19b7e}}
+AppName=DrWhoQuotesCmdPalExtension
 AppVersion={#AppVersion}
-AppPublisher=DEVELOPER_NAME
-DefaultDirName={autopf}\EXTENSION_NAME
+AppPublisher=Jessica Dene Earley-Cha
+DefaultDirName={autopf}\CmdPalExtensionDrWhoQuotes
 OutputDir=bin\Release\installer
-OutputBaseFilename=EXTENSION_NAME-Setup-{#AppVersion}
+OutputBaseFilename=CmdPalExtensionDrWhoQuotes-Setup-{#AppVersion}
 Compression=lzma
 SolidCompression=yes
 MinVersion=10.0.19041
@@ -29,8 +29,8 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Source: "bin\Release\win-x64\publish\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs
 
 [Icons]
-Name: "{group}\DISPLAY_NAME"; Filename: "{app}\EXTENSION_NAME.exe"
+Name: "{group}\DrWhoQuotesCmdPalExtension"; Filename: "{app}\CmdPalExtensionDrWhoQuotes.exe"
 
 [Registry]
-Root: HKCU; Subkey: "SOFTWARE\Classes\CLSID\{{CLSID-HERE}}"; ValueData: "EXTENSION_NAME"
-Root: HKCU; Subkey: "SOFTWARE\Classes\CLSID\{{CLSID-HERE}}\LocalServer32"; ValueData: "{app}\EXTENSION_NAME.exe -RegisterProcessAsComServer"
+Root: HKCU; Subkey: "SOFTWARE\Classes\CLSID\{14ece62f-3bcb-4e12-ac7c-f17c1cf19b7e}"; ValueData: "CmdPalExtensionDrWhoQuotes"
+Root: HKCU; Subkey: "SOFTWARE\Classes\CLSID\{14ece62f-3bcb-4e12-ac7c-f17c1cf19b7e}\LocalServer32"; ValueData: "{app}\CmdPalExtensionDrWhoQuotes.exe -RegisterProcessAsComServer"

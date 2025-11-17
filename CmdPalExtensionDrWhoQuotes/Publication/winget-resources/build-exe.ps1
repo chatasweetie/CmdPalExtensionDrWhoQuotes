@@ -9,20 +9,25 @@
 
 
 param(
-    [string]$ExtensionName = "UPDATE",  # Change to your extension name
+    [string]$ExtensionName = "CmdPalExtensionDrWhoQuotes",  # Change to your extension name
     [string]$Configuration = "Release",
-    [string]$Version = "UPDATE",  # Change to your version
-    [string]$Platform = @("x64", "arm64")
+    [string]$Version = "0.0.1.0",  # Change to your version
+    [string[]]$Platforms = @("x64", "arm64")
 )
 
 $ErrorActionPreference = "Stop"
 
-Write-Host "Building $ExtensionName EXE installer..." -ForegroundColor GreenWrite-Host "Version: $Version" -ForegroundColor Yellow
+Write-Host "Building $ExtensionName EXE installer..." -ForegroundColor Green
+Write-Host "Version: $Version" -ForegroundColor Yellow
 Write-Host "Platforms: $($Platforms -join ', ')" -ForegroundColor Yellow
 
-
-$ProjectDir = Split-Path -Parent $MyInvocation.MyCommand.Path
+# Get the project directory (two levels up from winget-resources)
+$ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
+$ProjectDir = Split-Path -Parent (Split-Path -Parent $ScriptDir)
 $ProjectFile = "$ProjectDir\$ExtensionName.csproj"
+
+Write-Host "Script directory: $ScriptDir" -ForegroundColor Cyan
+Write-Host "Project directory: $ProjectDir" -ForegroundColor Cyan
 
 # Clean previous builds
 Write-Host "Cleaning previous builds..." -ForegroundColor Yellow
@@ -60,7 +65,7 @@ foreach ($Platform in $Platforms) {
 
     # Create platform-specific setup script
     Write-Host "Creating installer script for $Platform..." -ForegroundColor Yellow
-    $setupTemplate = Get-Content "$ProjectDir\setup-template.iss" -Raw
+    $setupTemplate = Get-Content "$ScriptDir\setup-template.iss" -Raw
     
     # Update version
     $setupScript = $setupTemplate -replace '#define AppVersion ".*"', "#define AppVersion `"$Version`""
